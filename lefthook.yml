@@ -1,0 +1,35 @@
+commit-msg:
+  parallel: true
+  commands:
+    commitlint:
+      run: npx commitlint --edit
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: '*.{js,ts}'
+      run: yarn format {staged_files}
+    lint:
+      glob: '*.{js,ts}'
+      run: yarn lint:fix {staged_files}
+    types:
+      glob: '*.ts'
+      run: npx tsc
+    test:
+      run: yarn test
+    test-e2e:
+      run: yarn test:e2e
+
+pre-push:
+  parallel: true
+  commands:
+    types:
+      glob: '*.ts'
+      run: npx tsc --noEmit
+    test:
+      run: yarn test
+    test-e2e:
+      run: yarn test:e2e
+    build:
+      run: yarn build
