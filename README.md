@@ -1,17 +1,17 @@
-# Portfolio server
+# Task Manager Backend Server
 
 ## Local Installation
 
 ### 1. Clone repository 🚀
 
 ```bash
-git clone https://github.com/Hlebread/NEST.JS-Server.git
+git clone https://github.com/Hlebread/task-manager-backend.git
 ```
 
 or if you have installed SSH
 
 ```bash
-git clone git@github.com:Hlebread/NEST.JS-Server.git
+git clone git@github.com:Hlebread/task-manager-backend.git
 ```
 
 ### 2. Configure project 🛠️
@@ -21,7 +21,7 @@ Install the package manager [**pnpm**](https://www.npmjs.com/package/pnpm) and r
 #### 2.1 Install project dependencies
 
 ```bash
-pnpm instal
+pnpm install
 ```
 
 #### 2.2 Install Git hooks
