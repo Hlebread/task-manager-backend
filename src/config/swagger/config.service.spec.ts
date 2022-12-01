@@ -59,7 +59,7 @@ describe('SwaggerConfigService', () => {
     });
 
     it('should return default description', () => {
-      expect(service.description).toBe('REST API documentation');
+      expect(service.description).toBe('Task Manager API documentation');
     });
 
     it('should return default version', () => {
