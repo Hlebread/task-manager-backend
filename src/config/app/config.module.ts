@@ -13,7 +13,7 @@ import { configuration } from './configuration';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV}.env`,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
       load: [configuration],
       validationSchema,
     }),
