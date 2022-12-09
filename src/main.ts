@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppConfigService, SwaggerConfigService } from '@/config';
 
 import { AppModule } from './app.module';
+import { StrictValidationPipe } from './common/pipes';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,8 +15,11 @@ async function bootstrap() {
 
   swaggerConfig.setup(app);
 
+  app.useGlobalPipes(new StrictValidationPipe());
+
   await app.listen(appConfig.port);
 
   logger.log(appConfig.startMessage);
 }
+
 bootstrap();
