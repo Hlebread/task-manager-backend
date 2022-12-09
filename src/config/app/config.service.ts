@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { Environments } from '@/common';
 
 /**
- * Service dealing with app config based operations.
+ * Service dealing with App config based operations.
  *
  * @class
  */
@@ -13,7 +13,7 @@ export class AppConfigService {
   /**
    * @ignore
    */
-  constructor(private configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) {}
 
   /**
    * App name
@@ -47,8 +47,8 @@ export class AppConfigService {
    *
    * @property
    */
-  get environment(): `${Environments}` {
-    return this.configService.get<`${Environments}`>('app.environment');
+  get environment(): Environments {
+    return this.configService.get<Environments>('app.environment');
   }
 
   /**

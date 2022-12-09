@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { AppConfigService } from './config.service';
+import { GraphQLConfigService } from './config.service';
 import { validationSchema } from './config.validation';
 import { configuration } from './configuration';
 
 /**
- * Import and provide App configuration related classes.
+ * Import and provide GraphQL configuration related classes.
  *
  * @module
  */
@@ -18,7 +18,7 @@ import { configuration } from './configuration';
       validationSchema,
     }),
   ],
-  providers: [ConfigService, AppConfigService],
-  exports: [ConfigService, AppConfigService],
+  providers: [ConfigService, GraphQLConfigService],
+  exports: [ConfigService, GraphQLConfigService],
 })
-export class AppConfigModule {}
+export class GraphQLConfigModule {}
