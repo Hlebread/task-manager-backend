@@ -19,5 +19,5 @@ export const validationSchema = Joi.object({
       Environments.STAGING,
       Environments.TEST,
     )
-    .default('development'),
+    .default(Environments.DEVELOPMENT),
 });
