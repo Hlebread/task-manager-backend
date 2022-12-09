@@ -15,14 +15,14 @@ import { AppConfigService } from '../app';
 @Injectable()
 export class SwaggerConfigService {
   /**
-   * Logger for `SwaggerConfigService`
+   * Logger for `SwaggerConfigService`.
    *
    * @external
    */
   private readonly logger: Logger = new Logger('Swagger');
 
   /**
-   * Swagger environments
+   * Swagger environments.
    *
    * @property
    */
@@ -34,7 +34,7 @@ export class SwaggerConfigService {
   ];
 
   /**
-   * Swagger endpoints
+   * Swagger endpoints.
    *
    * @property
    */
@@ -49,7 +49,7 @@ export class SwaggerConfigService {
   ) {}
 
   /**
-   * Swagger endpoint
+   * Swagger endpoint.
    *
    * @property
    */
@@ -58,7 +58,7 @@ export class SwaggerConfigService {
   }
 
   /**
-   * Swagger title
+   * Swagger title.
    *
    * @property
    */
@@ -67,7 +67,7 @@ export class SwaggerConfigService {
   }
 
   /**
-   * Swagger description
+   * Swagger description.
    *
    * @property
    */
@@ -76,7 +76,7 @@ export class SwaggerConfigService {
   }
 
   /**
-   * Swagger version
+   * Swagger version.
    *
    * @property
    */
@@ -85,7 +85,7 @@ export class SwaggerConfigService {
   }
 
   /**
-   * Swagger user
+   * Swagger user.
    *
    * @property
    */
@@ -94,7 +94,7 @@ export class SwaggerConfigService {
   }
 
   /**
-   * Swagger password
+   * Swagger password.
    *
    * @property
    */
@@ -103,7 +103,7 @@ export class SwaggerConfigService {
   }
 
   /**
-   * Set up Swagger
+   * Set up Swagger.
    *
    * @param {INestApplication} app Instance of application
    */
@@ -138,9 +138,9 @@ export class SwaggerConfigService {
   }
 
   /**
-   * Set up authentication on `this.endpoints` routes
+   * Set up authentication on `this.endpoints` routes.
    *
-   * @param {INestApplication} app Instance of application
+   * @param app Instance of application.
    */
   private protectSwaggerEndpoints(app: INestApplication) {
     app.use(

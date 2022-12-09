@@ -16,14 +16,29 @@ export class GraphQLConfigService {
    */
   constructor(private readonly configService: ConfigService) {}
 
+  /**
+   * Is Apollo `debug` mode enabled.
+   *
+   * @property
+   */
   get debugEnabled(): boolean {
     return this.configService.get<string>('graphql.debugEnabled') === 'true';
   }
 
+  /**
+   * Is GraphQL playground enabled.
+   *
+   * @property
+   */
   get playgroundEnabled(): boolean {
     return this.configService.get<string>('graphql.playgroundEnabled') === 'true';
   }
 
+  /**
+   * Apollo Driver config.
+   *
+   * @property
+   */
   get config(): Omit<ApolloDriverConfig, 'driver'> {
     return {
       debug: this.debugEnabled,

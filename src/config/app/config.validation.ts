@@ -3,7 +3,7 @@ import * as Joi from 'joi';
 import { Environments } from '@/common';
 
 /**
- * Validation schema for specified App `env` vars
+ * Validation schema for specified App `env` vars.
  *
  * @schema
  */

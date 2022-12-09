@@ -12,7 +12,7 @@ export class TypeOrmConfigService {
   constructor(private readonly configService: ConfigService) {}
 
   /**
-   * Database host
+   * Database host.
    *
    * @property
    */
@@ -21,7 +21,7 @@ export class TypeOrmConfigService {
   }
 
   /**
-   * Database port
+   * Database port.
    *
    * @property
    */
@@ -30,7 +30,7 @@ export class TypeOrmConfigService {
   }
 
   /**
-   * Database username
+   * Database username.
    *
    * @property
    */
@@ -39,7 +39,7 @@ export class TypeOrmConfigService {
   }
 
   /**
-   * Database password
+   * Database password.
    *
    * @property
    */
@@ -48,7 +48,7 @@ export class TypeOrmConfigService {
   }
 
   /**
-   * Database type
+   * Database type.
    *
    * @property
    */
@@ -57,7 +57,7 @@ export class TypeOrmConfigService {
   }
 
   /**
-   * Synchronize in TypeORM
+   * Synchronize in TypeORM.
    *
    * @property
    */
@@ -66,9 +66,9 @@ export class TypeOrmConfigService {
   }
 
   /**
-   * Get TypeOrm module config
+   * Get TypeOrm module config.
    *
-   * @return {TypeOrmModuleOptions} config
+   * @return TypeORM config.
    */
   getConfig(): TypeOrmModuleOptions {
     return {

@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 
 /**
- * Validation schema for specified GraphQL `env` vars
+ * Validation schema for specified GraphQL `env` vars.
  *
  * @schema
  */
