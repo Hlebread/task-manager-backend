@@ -100,6 +100,7 @@ describe('TypeOrmConfigService', () => {
         POSTGRES_PORT: '10000',
         POSTGRES_DATABASE: 'db',
         POSTGRES_USERNAME: 'username',
+        TYPEORM_SYNCHRONIZE: 'true',
       };
 
       await createTestingModule();
@@ -125,23 +126,21 @@ describe('TypeOrmConfigService', () => {
       expect(service.password).toBe('password');
     });
 
-    // it('should return synchronize', () => {
-    //   console.log(process.env);
+    it('should return synchronize', () => {
+      expect(service.synchronize).toBe(true);
+    });
 
-    //   expect(service.synchronize).toBe(true);
-    // });
-
-    // it('should return config', () => {
-    //   expect(service.getConfig()).toEqual({
-    //     type: 'postgres',
-    //     autoLoadEntities: true,
-    //     synchronize: true,
-    //     host: 'host',
-    //     port: 10000,
-    //     database: 'db',
-    //     username: 'username',
-    //     password: 'password',
-    //   });
-    // });
+    it('should return config', () => {
+      expect(service.getConfig()).toEqual({
+        type: 'postgres',
+        autoLoadEntities: true,
+        synchronize: true,
+        host: 'host-custom',
+        port: 10000,
+        database: 'db',
+        username: 'username',
+        password: 'password',
+      });
+    });
   });
 });
