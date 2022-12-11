@@ -16,7 +16,7 @@ type User {
   deleted_at: DateTime
 
   """Timestamp of user last sign in"""
-  last_sing_in_at: DateTime
+  last_sign_in_at: DateTime
 
   """User email"""
   email: String!
@@ -26,10 +26,6 @@ type User {
 
   """Is user email verified"""
   email_verified: Boolean!
-
-  """User password"""
-  password: String!
-  refresh_token: String
 
   """User display name"""
   display_name: String
@@ -73,6 +69,9 @@ type Query {
 }
 
 type Mutation {
+  registerUser(authSignUpInput: AuthSignUpInput!): User!
+  loginUser(authSignInInput: AuthSignInInput!): User!
+
   """Creates new user entity with provided data"""
   createUser(createUserInput: CreateUserInput!): User!
 
@@ -91,6 +90,46 @@ type Mutation {
   Restores a user entity corresponding to the provided ID that has been soft-deleted
   """
   restoreUser(id: String!): User!
+}
+
+input AuthSignUpInput {
+  """User display name"""
+  display_name: String = null
+
+  """User given name"""
+  given_name: String = null
+
+  """User family name"""
+  family_name: String = null
+
+  """User gender"""
+  gender: String = null
+
+  """User date of birth"""
+  date_of_birth: DateTime = null
+
+  """User photo URL"""
+  photo_url: String = null
+
+  """User phone number"""
+  phone_number: String = null
+
+  """User browser locale"""
+  locale: String = "en"
+
+  """Email"""
+  email: String!
+
+  """Password"""
+  password: String!
+}
+
+input AuthSignInInput {
+  """Email"""
+  email: String!
+
+  """Password"""
+  password: String!
 }
 
 input CreateUserInput {

@@ -15,6 +15,7 @@ import {
   TypeOrmConfigService,
 } from '@/config';
 
+import { AuthBasicModule } from './auth/auth-basic';
 import { UsersModule } from './models/users/users.module';
 
 @Module({
@@ -33,6 +34,7 @@ import { UsersModule } from './models/users/users.module';
       useFactory: (config: GraphQLConfigService) => config.config,
       driver: ApolloDriver,
     }),
+    AuthBasicModule,
     AppConfigModule,
     SwaggerConfigModule,
     UsersModule,

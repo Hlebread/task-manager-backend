@@ -8,7 +8,7 @@ import { UpdateUserInput } from './update-user.input';
 @InputType()
 export class CreateUserInput extends PartialType(UpdateUserInput) implements Partial<User> {
   @Field({ description: 'Email' })
-  @IsEmail({}, { message: 'Email has invalid format' })
+  @IsEmail({}, { message: 'Invalid email format' })
   email: string;
 
   @Field({ description: 'Password' })
