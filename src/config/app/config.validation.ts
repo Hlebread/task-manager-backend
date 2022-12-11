@@ -3,7 +3,7 @@ import * as Joi from 'joi';
 import { Environments } from '@/common';
 
 /**
- * Validation schema for specified App `env` vars
+ * Validation schema for specified App `env` vars.
  *
  * @schema
  */
@@ -19,5 +19,5 @@ export const validationSchema = Joi.object({
       Environments.STAGING,
       Environments.TEST,
     )
-    .default('development'),
+    .default(Environments.DEVELOPMENT),
 });

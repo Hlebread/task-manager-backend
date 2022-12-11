@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 
 /**
- * Validation schema for specified TypeOrm `env` vars
+ * Validation schema for specified TypeOrm `env` vars.
  *
  * @schema
  */
