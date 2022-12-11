@@ -57,6 +57,19 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type AuthTokensResponseDto {
+  """JWT access token"""
+  access_token: String!
+
+  """JWT refresh token"""
+  refresh_token: String!
+}
+
+type AuthAccessTokenResponseDto {
+  """JWT access token"""
+  access_token: String!
+}
+
 type Query {
   """Returns array of all users"""
   users(withDeleted: Boolean = false): [User!]!
@@ -69,7 +82,10 @@ type Query {
 }
 
 type Mutation {
+  """Registers new user with provided credentials"""
   registerUser(authSignUpInput: AuthSignUpInput!): User!
+
+  """Logs in user with provided credentials"""
   loginUser(authSignInInput: AuthSignInInput!): User!
 
   """Creates new user entity with provided data"""
@@ -90,6 +106,15 @@ type Mutation {
   Restores a user entity corresponding to the provided ID that has been soft-deleted
   """
   restoreUser(id: String!): User!
+
+  """Registers new user with provided credentials"""
+  registerUserTokens(authSignUpInput: AuthSignUpInput!): AuthTokensResponseDto!
+
+  """Logs in user with provided credentials"""
+  loginUserTokens(authSignInInput: AuthSignInInput!): AuthTokensResponseDto!
+
+  """Refreshes user access token"""
+  refreshUserTokens: AuthAccessTokenResponseDto!
 }
 
 input AuthSignUpInput {

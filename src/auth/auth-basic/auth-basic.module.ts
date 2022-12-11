@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
 
+import { AppConfigModule } from '@/config';
 import { UsersModule } from '@/models/users';
 
 import { LocalStrategy } from '../strategies';
@@ -13,7 +15,7 @@ import { AuthResolver } from './auth.resolver';
  * @module
  */
 @Module({
-  imports: [UsersModule],
+  imports: [PassportModule, AppConfigModule, UsersModule],
   providers: [AuthResolver, AuthBasicService, LocalStrategy],
   exports: [AuthBasicService],
 })

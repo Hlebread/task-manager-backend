@@ -15,7 +15,7 @@ import { WrongCredentialsException } from '../exceptions';
 export class AuthBasicService {
   constructor(private readonly usersService: UsersService) {}
 
-  public async register(registrationInput: AuthSignUpInput) {
+  public async register(registrationInput: AuthSignUpInput): Promise<User> {
     const hashedPassword = await bcrypt.hash(registrationInput.password, 10);
 
     const createdUser = await this.usersService.create({
@@ -26,7 +26,7 @@ export class AuthBasicService {
     return createdUser;
   }
 
-  public async logIn(userFromContext: User) {
+  public async logIn(userFromContext: User): Promise<User> {
     const user = await this.usersService.update(userFromContext.id, {
       last_sign_in_at: new Date(),
     });
@@ -36,7 +36,7 @@ export class AuthBasicService {
 
   // public logout() {}
 
-  public async getAuthenticatedUser(email: string, plainTextPassword: string) {
+  public async getAuthenticatedUser(email: string, plainTextPassword: string): Promise<User> {
     try {
       const user = await this.usersService.findOneByEmail(email);
 
@@ -48,7 +48,7 @@ export class AuthBasicService {
     }
   }
 
-  private async verifyPassword(plainTextPassword: string, hashedPassword: string) {
+  private async verifyPassword(plainTextPassword: string, hashedPassword: string): Promise<void> {
     const isPasswordMatching = await bcrypt.compare(plainTextPassword, hashedPassword);
 
     if (!isPasswordMatching) {

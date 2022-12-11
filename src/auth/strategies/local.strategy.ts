@@ -10,7 +10,7 @@ import { AuthBasicService } from '../auth-basic';
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(
     @Inject(forwardRef(() => AuthBasicService))
-    private readonly authenticationService: AuthBasicService,
+    private readonly authBasicService: AuthBasicService,
   ) {
     super({
       usernameField: 'email',
@@ -18,6 +18,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(email: string, password: string): Promise<User> {
-    return this.authenticationService.getAuthenticatedUser(email, password);
+    return this.authBasicService.getAuthenticatedUser(email, password);
   }
 }

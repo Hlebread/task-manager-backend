@@ -6,6 +6,7 @@ import { CrudService } from '@/common/abstractions/crud-service.abstraction';
 
 import { CreateUserInput, UpdateUserInput } from './dto';
 import { UserExistsException, UserNotDeletedException, UserNotFoundException } from './exceptions';
+import { UpdateUserInternalFields } from './interfaces';
 import { User } from './user.entity';
 
 @Injectable()
@@ -52,7 +53,7 @@ export class UsersService implements CrudService<User> {
 
   async update(
     id: User['id'],
-    updateUserInput: UpdateUserInput & { last_sign_in_at?: Date },
+    updateUserInput: UpdateUserInput & UpdateUserInternalFields,
   ): Promise<User> {
     const { affected } = await this.usersRepository.update({ id }, updateUserInput);
 
