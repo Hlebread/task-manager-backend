@@ -16,7 +16,7 @@ export class JwtAccessTokenGuard extends AuthGuard('jwt') {
   /**
    * @ignore
    */
-  constructor(/* private readonly reflector: Reflector */) {
+  constructor(private readonly reflector: Reflector) {
     super();
   }
 
@@ -26,12 +26,12 @@ export class JwtAccessTokenGuard extends AuthGuard('jwt') {
    * @returns Boolean value
    */
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-    // const isPublic = this.reflector.getAllAndOverride(PUBLIC_KEY, [
-    //   context.getHandler(),
-    //   context.getClass(),
-    // ]);
+    const isPublic = this.reflector.getAllAndOverride(PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
 
-    // if (isPublic) return true;
+    if (isPublic) return true;
 
     return super.canActivate(context);
   }
