@@ -5,7 +5,7 @@ import { SetMetadata } from '@nestjs/common';
  *
  * @constant
  */
-export const PUBLIC_KEY = 'isPublic';
+export const PUBLIC_KEY = Symbol('Public decorator');
 
 /**
  * A function that creates decorator

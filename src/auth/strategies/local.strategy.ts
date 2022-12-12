@@ -6,6 +6,11 @@ import { User } from '@/models/users';
 
 import { AuthBasicService } from '../auth-basic';
 
+/**
+ * Strategy implementing local authentication.
+ *
+ * @class
+ */
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(

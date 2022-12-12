@@ -3,11 +3,13 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
+import { User } from '@/models/users';
+
 import { AuthJwtService } from '../auth-jwt';
 import { AuthTokenPayload } from '../interfaces';
 
 /**
- * Strategy dealing with JWT refresh authentication.
+ * Strategy implementing JWT access token refresh.
  *
  * @class
  */
@@ -20,27 +22,20 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-ref
     @Inject(forwardRef(() => AuthJwtService)) private readonly authJwtService: AuthJwtService,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([
-        ExtractJwt.fromAuthHeaderAsBearerToken(),
-        (request: Request) => request?.cookies?.Refresh,
-      ]),
+      jwtFromRequest: ExtractJwt.fromExtractors([(request: Request) => request.get('Refresh')]),
       secretOrKey: 'secret',
       passReqToCallback: true,
     });
   }
 
   /**
-   * Method that get Authorization token from cookies or from headers
+   * Method that get Refresh token from from headers
    * and compare it with stored user refresh token.
    * If it matches than guard allow to activate endpoint
    *
    * @ignore
    */
-  validate(request: Request, payload: AuthTokenPayload) {
-    console.log(request);
-
-    const refreshToken = 'a';
-
-    return this.authJwtService.getUserIfRefreshTokenMatches(payload.userId, refreshToken);
+  validate(request: Request, payload: AuthTokenPayload): Promise<User> {
+    return this.authJwtService.getUserIfRefreshTokenMatches(payload.userId, request.get('Refresh'));
   }
 }

@@ -3,7 +3,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
 
 /**
- * Guard implementing protection using JWT refresh token.
+ * Guard implementing authentication with JWT refresh token.
  *
  * @class
  */

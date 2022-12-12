@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
-import { PassportModule } from '@nestjs/passport';
 
 import { AppConfigModule } from '@/config';
 import { UsersModule } from '@/models/users';
 
-import { LocalStrategy } from '../strategies';
-
+import { AuthBasicResolver } from './auth-basic.resolver';
 import { AuthBasicService } from './auth-basic.service';
-import { AuthResolver } from './auth.resolver';
 
 /**
  * Import and provide basic authentication related classes.
@@ -15,8 +12,8 @@ import { AuthResolver } from './auth.resolver';
  * @module
  */
 @Module({
-  imports: [PassportModule, AppConfigModule, UsersModule],
-  providers: [AuthResolver, AuthBasicService, LocalStrategy],
+  imports: [AppConfigModule, UsersModule],
+  providers: [AuthBasicResolver, AuthBasicService],
   exports: [AuthBasicService],
 })
 export class AuthBasicModule {}

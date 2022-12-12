@@ -14,6 +14,7 @@ import {
 
 import { AuthBasicModule } from './auth/auth-basic';
 import { AuthJwtModule } from './auth/auth-jwt';
+import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './models/users/users.module';
 
 @Module({
@@ -32,8 +33,7 @@ import { UsersModule } from './models/users/users.module';
       useFactory: (config: GraphQLConfigService) => config.config,
       driver: ApolloDriver,
     }),
-    AuthBasicModule,
-    AuthJwtModule,
+    AuthModule,
     AppConfigModule,
     SwaggerConfigModule,
     UsersModule,

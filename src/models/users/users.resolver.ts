@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 
+import { JwtAccessTokenGuard } from '@/auth/guards';
 import { EnvironmentGuard, Environments } from '@/common';
 
 import { CreateUserInput, UpdateUserInput } from './dto';
@@ -21,6 +22,7 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users', description: 'Returns array of all users' })
+  @UseGuards(JwtAccessTokenGuard)
   findAll(@Args('withDeleted', { defaultValue: false }) withDeleted: boolean): Promise<User[]> {
     return this.usersService.findAll(withDeleted);
   }

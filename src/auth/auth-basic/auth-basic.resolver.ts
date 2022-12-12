@@ -11,7 +11,7 @@ import { AuthBasicService } from './auth-basic.service';
 
 @Resolver(() => User)
 @UseGuards(EnvironmentGuard([Environments.DEVELOPMENT, Environments.PRODUCTION]))
-export class AuthResolver {
+export class AuthBasicResolver {
   constructor(private readonly authenticationService: AuthBasicService) {}
 
   @Mutation(() => User, {
