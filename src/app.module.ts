@@ -12,10 +12,8 @@ import {
   TypeOrmConfigService,
 } from '@/config';
 
-import { AuthBasicModule } from './auth/auth-basic';
-import { AuthJwtModule } from './auth/auth-jwt';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './models/users/users.module';
+import { AuthModule } from './auth';
+import { UsersModule } from './models/users';
 
 @Module({
   imports: [
