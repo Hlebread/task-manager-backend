@@ -26,8 +26,8 @@ export class AuthBasicService {
     return createdUser;
   }
 
-  public async logIn(userFromContext: User): Promise<User> {
-    const user = await this.usersService.update(userFromContext.id, {
+  public async logIn({ id }: User): Promise<User> {
+    const user = await this.usersService.update(id, {
       last_sign_in_at: new Date(),
     });
 

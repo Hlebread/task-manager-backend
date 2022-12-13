@@ -71,6 +71,9 @@ type AuthAccessTokenResponseDto {
 }
 
 type Query {
+  """Verifies JSON Web Tokens and returns user data"""
+  authenticateUser: User!
+
   """Returns array of all users"""
   users(withDeleted: Boolean = false): [User!]!
 
@@ -79,6 +82,12 @@ type Query {
 
   """Returns user with provided email"""
   userByEmail(email: String!): User!
+
+  """Logs out user"""
+  logoutUserTokens: String!
+
+  """Logs out user"""
+  logoutUserCookies: User!
 }
 
 type Mutation {
@@ -115,6 +124,15 @@ type Mutation {
 
   """Refreshes user access token"""
   refreshUserTokens: AuthAccessTokenResponseDto!
+
+  """Registers new user with provided credentials"""
+  registerUserCookies(authSignUpInput: AuthSignUpInput!): User!
+
+  """Logs in user with provided credentials"""
+  loginUserCookies(authSignInInput: AuthSignInInput!): User!
+
+  """Refreshes user access token cookie"""
+  refreshUserCookies: User!
 }
 
 input AuthSignUpInput {

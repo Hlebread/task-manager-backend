@@ -4,16 +4,18 @@ import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from '@/models/users';
 
 import { AuthBasicModule } from './auth-basic';
+import { AuthCookiesModule } from './auth-cookies';
 import { AuthJwtModule } from './auth-jwt';
+import { AuthResolver } from './auth.resolver';
 import { JwtRefreshTokenStrategy, JwtStrategy, LocalStrategy } from './strategies';
 
 /**
- * Import and provide basic authentication related classes.
+ * Imports and aggregates authentication related classes.
  *
  * @module
  */
 @Module({
-  imports: [AuthBasicModule, AuthJwtModule, PassportModule, UsersModule],
-  providers: [JwtRefreshTokenStrategy, JwtStrategy, LocalStrategy],
+  imports: [AuthBasicModule, AuthJwtModule, AuthCookiesModule, PassportModule, UsersModule],
+  providers: [AuthResolver, JwtRefreshTokenStrategy, JwtStrategy, LocalStrategy],
 })
 export class AuthModule {}

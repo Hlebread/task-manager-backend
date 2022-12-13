@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 
 import { GetCurrentUser } from '@/common';
 
@@ -9,7 +9,7 @@ import {
   AuthSignUpInput,
   AuthTokensResponseDto,
 } from '../dto';
-import { JwtRefreshTokenGuard, LocalAuthenticationGuard } from '../guards';
+import { JwtAccessTokenGuard, JwtRefreshTokenGuard, LocalAuthenticationGuard } from '../guards';
 
 import { AuthJwtService } from './auth-jwt.service';
 
@@ -34,9 +34,9 @@ export class AuthJwtResolver {
   @UseGuards(LocalAuthenticationGuard)
   logIn(
     @Args('authSignInInput') _: AuthSignInInput,
-    @GetCurrentUser() user,
+    @GetCurrentUser() userFromContext,
   ): Promise<AuthTokensResponseDto> {
-    return this.authJwtService.logIn(user);
+    return this.authJwtService.logIn(userFromContext);
   }
 
   @Mutation(() => AuthAccessTokenResponseDto, {
@@ -44,7 +44,18 @@ export class AuthJwtResolver {
     description: 'Refreshes user access token',
   })
   @UseGuards(JwtRefreshTokenGuard)
-  refresh(@GetCurrentUser() user): Promise<Pick<AuthTokensResponseDto, 'access_token'>> {
-    return this.authJwtService.refresh(user);
+  refresh(@GetCurrentUser() userFromContext): Promise<Pick<AuthTokensResponseDto, 'access_token'>> {
+    return this.authJwtService.refresh(userFromContext);
+  }
+
+  @Query(() => String, {
+    name: 'logoutUserTokens',
+    description: 'Logs out user',
+  })
+  @UseGuards(JwtAccessTokenGuard)
+  async logOut(@GetCurrentUser() userFromContext): Promise<string> {
+    await this.authJwtService.logOut(userFromContext);
+
+    return 'OK';
   }
 }

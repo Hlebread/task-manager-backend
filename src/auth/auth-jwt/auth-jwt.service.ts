@@ -48,6 +48,10 @@ export class AuthJwtService {
     return { access_token: newAccessToken };
   }
 
+  public logOut({ id }: User): Promise<User> {
+    return this.removeCurrentRefreshToken(id);
+  }
+
   /**
    * Checks validity of refresh token.
    *
@@ -118,6 +122,32 @@ export class AuthJwtService {
   }
 
   /**
+   * Sets user's new refresh token to the database.
+   *
+   * @param userId Unique user id.
+   * @param refreshToken Refresh token string.
+   */
+  public async setCurrentRefreshToken(userId: User['id'], refreshToken: string): Promise<void> {
+    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+
+    this.usersService.update(userId, {
+      refresh_token: currentHashedRefreshToken,
+    });
+  }
+
+  /**
+   * Removes user's current refresh token to the database.
+   *
+   * @param userId Unique user id.
+   * @param refreshToken Refresh token string.
+   */
+  public removeCurrentRefreshToken(userId: User['id']): Promise<User> {
+    return this.usersService.update(userId, {
+      refresh_token: null,
+    });
+  }
+
+  /**
    * Creates JWT token.
    *
    * @param user User entity.
@@ -129,19 +159,5 @@ export class AuthJwtService {
     const payload: AuthTokenPayload = { userId: id, email };
 
     return this.jwtService.signAsync(payload, options);
-  }
-
-  /**
-   * Sets user's new refresh token to the database.
-   *
-   * @param userId Unique user id.
-   * @param refreshToken Refresh token string.
-   */
-  private async setCurrentRefreshToken(userId: User['id'], refreshToken: string): Promise<void> {
-    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
-
-    await this.usersService.update(userId, {
-      refresh_token: currentHashedRefreshToken,
-    });
   }
 }

@@ -9,7 +9,7 @@ import { AuthJwtResolver } from './auth-jwt.resolver';
 import { AuthJwtService } from './auth-jwt.service';
 
 /**
- * Import and provide basic JWT authentication related classes.
+ * Imports and provides basic JWT authentication related classes.
  *
  * @module
  */
