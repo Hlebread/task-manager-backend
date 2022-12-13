@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
+import { AuthConfigService } from '@/config';
 import { User, UsersService } from '@/models/users';
 
 import { AuthBasicService } from '../auth-basic';
@@ -20,6 +21,7 @@ export class AuthJwtService {
    */
   constructor(
     private readonly authBasicService: AuthBasicService,
+    private readonly authConfigService: AuthConfigService,
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
   ) {}
@@ -98,8 +100,8 @@ export class AuthJwtService {
    */
   public async getJwtAccessToken(user: User): Promise<AuthTokensResponseDto['access_token']> {
     const options: JwtSignOptions = {
-      secret: 'secret',
-      expiresIn: '1d',
+      secret: this.authConfigService.jwtAtSecret,
+      expiresIn: this.authConfigService.jwtAtExpTime,
     };
 
     return this.getJwtToken(user, options);
@@ -114,8 +116,8 @@ export class AuthJwtService {
    */
   public async getJwtRefreshToken(user: User): Promise<AuthTokensResponseDto['refresh_token']> {
     const options: JwtSignOptions = {
-      secret: 'secret',
-      expiresIn: '1d',
+      secret: this.authConfigService.jwtRtSecret,
+      expiresIn: this.authConfigService.jwtRtExpTime,
     };
 
     return this.getJwtToken(user, options);

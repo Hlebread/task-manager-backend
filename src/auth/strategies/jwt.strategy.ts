@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
+import { AuthConfigService } from '@/config';
 import { UsersService } from '@/models/users';
 
 import { AuthTokenPayload } from '../interfaces';
@@ -17,12 +18,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   /**
    * @ignore
    */
-  constructor(private readonly userService: UsersService) {
+  constructor(
+    private readonly authConfigService: AuthConfigService,
+    private readonly userService: UsersService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => request.get('Authentication'),
       ]),
-      secretOrKey: 'secret',
+      secretOrKey: authConfigService.jwtAtSecret,
     });
   }
 

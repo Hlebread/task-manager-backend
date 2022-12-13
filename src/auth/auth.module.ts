@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 
+import { AuthConfigModule } from '@/config';
 import { UsersModule } from '@/models/users';
 
 import { AuthBasicModule } from './auth-basic';
@@ -15,7 +16,14 @@ import { JwtRefreshTokenStrategy, JwtStrategy, LocalStrategy } from './strategie
  * @module
  */
 @Module({
-  imports: [AuthBasicModule, AuthJwtModule, AuthCookiesModule, PassportModule, UsersModule],
+  imports: [
+    AuthBasicModule,
+    AuthConfigModule,
+    AuthJwtModule,
+    AuthCookiesModule,
+    PassportModule,
+    UsersModule,
+  ],
   providers: [AuthResolver, JwtRefreshTokenStrategy, JwtStrategy, LocalStrategy],
 })
 export class AuthModule {}
