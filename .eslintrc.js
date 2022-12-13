@@ -131,7 +131,7 @@ module.exports = {
         pathGroups: [
           {
             group: 'external',
-            pattern: '@/*',
+            pattern: '@/**/*',
             position: 'after',
           },
         ],

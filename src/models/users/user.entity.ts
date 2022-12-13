@@ -8,7 +8,7 @@ import { EntityBase } from '@/common/abstractions';
 export class User extends EntityBase {
   @Field({ nullable: true, description: 'Timestamp of user last sign in' })
   @Column({ type: 'timestamptz', nullable: true })
-  readonly last_sing_in_at: Date;
+  readonly last_sign_in_at: Date;
 
   @Field({ description: 'User email' })
   @Column({ type: 'varchar', unique: true })
@@ -22,11 +22,11 @@ export class User extends EntityBase {
   @Column({ type: 'boolean', default: false })
   readonly email_verified: boolean;
 
-  @Field({ description: 'User password' })
+  // @Field({ description: 'User password' })
   @Column({ type: 'varchar' })
   readonly password: string;
 
-  @Field({ nullable: true })
+  // @Field({ nullable: true })
   @Column({ type: 'varchar', nullable: true })
   readonly refresh_token: string;
 

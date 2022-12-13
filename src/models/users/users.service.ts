@@ -2,11 +2,12 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QueryFailedError, Repository } from 'typeorm';
 
+import { CrudService } from '@/common/abstractions/crud-service.abstraction';
+
 import { CreateUserInput, UpdateUserInput } from './dto';
 import { UserExistsException, UserNotDeletedException, UserNotFoundException } from './exceptions';
+import { UpdateUserInternalFields } from './interfaces';
 import { User } from './user.entity';
-
-import { CrudService } from '@/common/abstractions/crud-service.abstraction';
 
 @Injectable()
 export class UsersService implements CrudService<User> {
@@ -50,7 +51,10 @@ export class UsersService implements CrudService<User> {
     return user;
   }
 
-  async update(id: User['id'], updateUserInput: UpdateUserInput): Promise<User> {
+  async update(
+    id: User['id'],
+    updateUserInput: UpdateUserInput & UpdateUserInternalFields,
+  ): Promise<User> {
     const { affected } = await this.usersRepository.update({ id }, updateUserInput);
 
     if (!affected) {

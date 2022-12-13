@@ -16,7 +16,7 @@ type User {
   deleted_at: DateTime
 
   """Timestamp of user last sign in"""
-  last_sing_in_at: DateTime
+  last_sign_in_at: DateTime
 
   """User email"""
   email: String!
@@ -26,10 +26,6 @@ type User {
 
   """Is user email verified"""
   email_verified: Boolean!
-
-  """User password"""
-  password: String!
-  refresh_token: String
 
   """User display name"""
   display_name: String
@@ -61,7 +57,23 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type AuthTokensResponseDto {
+  """JWT access token"""
+  access_token: String!
+
+  """JWT refresh token"""
+  refresh_token: String!
+}
+
+type AuthAccessTokenResponseDto {
+  """JWT access token"""
+  access_token: String!
+}
+
 type Query {
+  """Verifies JSON Web Tokens and returns user data"""
+  authenticateUser: User!
+
   """Returns array of all users"""
   users(withDeleted: Boolean = false): [User!]!
 
@@ -70,9 +82,21 @@ type Query {
 
   """Returns user with provided email"""
   userByEmail(email: String!): User!
+
+  """Logs out user"""
+  logoutUserTokens: String!
+
+  """Logs out user"""
+  logoutUserCookies: User!
 }
 
 type Mutation {
+  """Registers new user with provided credentials"""
+  registerUser(authSignUpInput: AuthSignUpInput!): User!
+
+  """Logs in user with provided credentials"""
+  loginUser(authSignInInput: AuthSignInInput!): User!
+
   """Creates new user entity with provided data"""
   createUser(createUserInput: CreateUserInput!): User!
 
@@ -91,6 +115,64 @@ type Mutation {
   Restores a user entity corresponding to the provided ID that has been soft-deleted
   """
   restoreUser(id: String!): User!
+
+  """Registers new user with provided credentials"""
+  registerUserTokens(authSignUpInput: AuthSignUpInput!): AuthTokensResponseDto!
+
+  """Logs in user with provided credentials"""
+  loginUserTokens(authSignInInput: AuthSignInInput!): AuthTokensResponseDto!
+
+  """Refreshes user access token"""
+  refreshUserTokens: AuthAccessTokenResponseDto!
+
+  """Registers new user with provided credentials"""
+  registerUserCookies(authSignUpInput: AuthSignUpInput!): User!
+
+  """Logs in user with provided credentials"""
+  loginUserCookies(authSignInInput: AuthSignInInput!): User!
+
+  """Refreshes user access token cookie"""
+  refreshUserCookies: User!
+}
+
+input AuthSignUpInput {
+  """User display name"""
+  display_name: String = null
+
+  """User given name"""
+  given_name: String = null
+
+  """User family name"""
+  family_name: String = null
+
+  """User gender"""
+  gender: String = null
+
+  """User date of birth"""
+  date_of_birth: DateTime = null
+
+  """User photo URL"""
+  photo_url: String = null
+
+  """User phone number"""
+  phone_number: String = null
+
+  """User browser locale"""
+  locale: String = "en"
+
+  """Email"""
+  email: String!
+
+  """Password"""
+  password: String!
+}
+
+input AuthSignInInput {
+  """Email"""
+  email: String!
+
+  """Password"""
+  password: String!
 }
 
 input CreateUserInput {

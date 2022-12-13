@@ -1,5 +1,3 @@
-import { join } from 'path';
-
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -7,7 +5,6 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 import {
   AppConfigModule,
-  AppConfigService,
   GraphQLConfigModule,
   GraphQLConfigService,
   SwaggerConfigModule,
@@ -15,7 +12,8 @@ import {
   TypeOrmConfigService,
 } from '@/config';
 
-import { UsersModule } from './models/users/users.module';
+import { AuthModule } from './auth';
+import { UsersModule } from './models/users';
 
 @Module({
   imports: [
@@ -33,6 +31,7 @@ import { UsersModule } from './models/users/users.module';
       useFactory: (config: GraphQLConfigService) => config.config,
       driver: ApolloDriver,
     }),
+    AuthModule,
     AppConfigModule,
     SwaggerConfigModule,
     UsersModule,
