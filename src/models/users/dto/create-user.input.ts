@@ -5,7 +5,7 @@ import { User } from '../user.entity';
 
 import { UpdateUserInput } from './update-user.input';
 
-@InputType()
+@InputType({ description: 'DTO with data to create new user entity' })
 export class CreateUserInput extends PartialType(UpdateUserInput) implements Partial<User> {
   @Field({ description: 'Email' })
   @IsEmail({}, { message: 'Invalid email format' })

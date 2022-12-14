@@ -1,4 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
+import { Transform } from 'class-transformer';
 import {
   IsString,
   IsOptional,
@@ -11,7 +12,7 @@ import {
 
 import { User } from '../user.entity';
 
-@InputType()
+@InputType({ description: 'DTO with user entity filds to update' })
 export class UpdateUserInput implements Partial<User> {
   @Field({ defaultValue: null, description: 'User display name' })
   @IsOptional()
@@ -50,8 +51,9 @@ export class UpdateUserInput implements Partial<User> {
   @IsPhoneNumber()
   phone_number?: string;
 
-  @Field({ defaultValue: 'en', description: 'User browser locale' })
+  @Field({ defaultValue: null, description: 'User browser locale' })
   @IsOptional()
   @IsLocale({ message: 'Locale has invalid format' })
+  @Transform(({ obj }) => obj.locale ?? 'en')
   locale?: string;
 }

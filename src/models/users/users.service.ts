@@ -15,9 +15,10 @@ export class UsersService implements CrudService<User> {
 
   async create(createUserInput: CreateUserInput): Promise<User> {
     try {
-      const user = this.usersRepository.create(createUserInput);
+      const userEntity = this.usersRepository.create(createUserInput);
+      const newUser = await this.usersRepository.save(userEntity);
 
-      return await this.usersRepository.save(user);
+      return newUser;
     } catch (error) {
       if (error instanceof QueryFailedError) {
         throw new UserExistsException();
