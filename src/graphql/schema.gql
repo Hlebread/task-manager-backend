@@ -2,6 +2,46 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type List {
+  """Unique entity ID"""
+  id: ID!
+
+  """Timestamp when entity was created"""
+  created_at: DateTime!
+
+  """Timestamp when entity was updated"""
+  updated_at: DateTime!
+
+  """Timestamp when entity was softly deleted"""
+  deleted_at: DateTime
+
+  """List name"""
+  name: String!
+
+  """List color"""
+  color: String
+
+  """List type"""
+  type: String
+
+  """List order"""
+  order: Float!
+
+  """Is list archived"""
+  archived: Boolean!
+
+  """Is list hidden"""
+  hidden: Boolean!
+
+  """Is list pinned"""
+  pinned: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type User {
   """Unique entity ID"""
   id: ID!
@@ -50,12 +90,10 @@ type User {
 
   """User browser locale"""
   locale: String!
-}
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
+  """User lists"""
+  lists: [List!]!
+}
 
 type AuthTokensResponseDto {
   """JWT access token"""
@@ -88,6 +126,12 @@ type Query {
 
   """Logs out user"""
   logoutUserCookies: User!
+
+  """Returns array of all user lists"""
+  lists(withDeleted: Boolean = false): [List!]!
+
+  """Returns list with provided ID"""
+  listById(id: String!): List!
 }
 
 type Mutation {
@@ -116,6 +160,12 @@ type Mutation {
   """
   restoreUser(id: String!): User!
 
+  """Updates the current user entity with the provided data"""
+  updateCurrentUser(updateUserInput: UpdateUserInput!): User!
+
+  """Softly deletes the current user entity"""
+  softDeleteCurrentUser: User!
+
   """Registers new user with provided credentials"""
   registerUserTokens(authSignUpInput: AuthSignUpInput!): AuthTokensResponseDto!
 
@@ -133,6 +183,25 @@ type Mutation {
 
   """Refreshes user access token cookie"""
   refreshUserCookies: User!
+
+  """Creates new list entity with provided data"""
+  createList(createListInput: CreateListInput!): List!
+
+  """
+  Updates the list entity corresponding to the provided ID with the provided data
+  """
+  updateList(id: String!, updateListInput: UpdateListInput!): List!
+
+  """Permanently deletes the list entity corresponding to the provided ID"""
+  deleteList(id: String!): List!
+
+  """Softly deletes the list entity corresponding to the provided ID"""
+  softDeleteList(id: String!): List!
+
+  """
+  Restores a list entity corresponding to the provided ID that has been soft-deleted
+  """
+  restoreList(id: String!): List!
 }
 
 input AuthSignUpInput {
@@ -158,7 +227,7 @@ input AuthSignUpInput {
   phone_number: String = null
 
   """User browser locale"""
-  locale: String = "en"
+  locale: String = null
 
   """Email"""
   email: String!
@@ -175,6 +244,7 @@ input AuthSignInInput {
   password: String!
 }
 
+"""DTO with data to create new user entity"""
 input CreateUserInput {
   """User display name"""
   display_name: String = null
@@ -198,7 +268,7 @@ input CreateUserInput {
   phone_number: String = null
 
   """User browser locale"""
-  locale: String = "en"
+  locale: String = null
 
   """Email"""
   email: String!
@@ -207,6 +277,7 @@ input CreateUserInput {
   password: String!
 }
 
+"""DTO with user entity filds to update"""
 input UpdateUserInput {
   """User display name"""
   display_name: String = null
@@ -230,5 +301,51 @@ input UpdateUserInput {
   phone_number: String = null
 
   """User browser locale"""
-  locale: String = "en"
+  locale: String = null
+}
+
+input CreateListInput {
+  """List name"""
+  name: String!
+
+  """List color"""
+  color: String
+
+  """List type"""
+  type: String
+
+  """List order"""
+  order: Float
+
+  """Is list archived"""
+  archived: Boolean
+
+  """Is list hidden"""
+  hidden: Boolean
+
+  """Is list pinned"""
+  pinned: Boolean
+}
+
+input UpdateListInput {
+  """List name"""
+  name: String
+
+  """List color"""
+  color: String
+
+  """List type"""
+  type: String
+
+  """List order"""
+  order: Float
+
+  """Is list archived"""
+  archived: Boolean
+
+  """Is list hidden"""
+  hidden: Boolean
+
+  """Is list pinned"""
+  pinned: Boolean
 }

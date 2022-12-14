@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import * as cookieParser from 'cookie-parser';
 
 import { AppConfigService, SwaggerConfigService } from '@/config';
 
@@ -13,9 +14,9 @@ async function bootstrap() {
   const swaggerConfig = app.get<SwaggerConfigService>(SwaggerConfigService);
   const logger = new Logger('Bootstrapper');
 
-  swaggerConfig.setup(app);
-
   app.useGlobalPipes(new StrictValidationPipe());
+  app.use(cookieParser());
+  swaggerConfig.setup(app);
 
   await app.listen(appConfig.port);
 
