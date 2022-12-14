@@ -13,6 +13,7 @@ import {
 } from '@/config';
 
 import { AuthModule } from './auth';
+import { ListsModule } from './models/lists';
 import { UsersModule } from './models/users';
 
 @Module({
@@ -35,6 +36,7 @@ import { UsersModule } from './models/users';
     AppConfigModule,
     SwaggerConfigModule,
     UsersModule,
+    ListsModule,
   ],
 })
 export class AppModule {}

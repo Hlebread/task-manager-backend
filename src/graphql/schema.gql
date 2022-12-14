@@ -2,6 +2,46 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type List {
+  """Unique entity ID"""
+  id: ID!
+
+  """Timestamp when entity was created"""
+  created_at: DateTime!
+
+  """Timestamp when entity was updated"""
+  updated_at: DateTime!
+
+  """Timestamp when entity was softly deleted"""
+  deleted_at: DateTime
+
+  """List name"""
+  name: String!
+
+  """List color"""
+  color: String
+
+  """List type"""
+  type: String
+
+  """List order"""
+  order: Float!
+
+  """Is list archived"""
+  archived: Boolean!
+
+  """Is list hidden"""
+  hidden: Boolean!
+
+  """Is list pinned"""
+  pinned: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type User {
   """Unique entity ID"""
   id: ID!
@@ -50,12 +90,10 @@ type User {
 
   """User browser locale"""
   locale: String!
-}
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
+  """User lists"""
+  lists: [List!]!
+}
 
 type AuthTokensResponseDto {
   """JWT access token"""
@@ -88,6 +126,12 @@ type Query {
 
   """Logs out user"""
   logoutUserCookies: User!
+
+  """Returns array of all user lists"""
+  lists(withDeleted: Boolean = false): [List!]!
+
+  """Returns list with provided ID"""
+  listById(id: String!): List!
 }
 
 type Mutation {
@@ -139,6 +183,25 @@ type Mutation {
 
   """Refreshes user access token cookie"""
   refreshUserCookies: User!
+
+  """Creates new list entity with provided data"""
+  createList(createListInput: CreateListInput!): List!
+
+  """
+  Updates the list entity corresponding to the provided ID with the provided data
+  """
+  updateList(id: String!, updateListInput: UpdateListInput!): List!
+
+  """Permanently deletes the list entity corresponding to the provided ID"""
+  deleteList(id: String!): List!
+
+  """Softly deletes the list entity corresponding to the provided ID"""
+  softDeleteList(id: String!): List!
+
+  """
+  Restores a list entity corresponding to the provided ID that has been soft-deleted
+  """
+  restoreList(id: String!): List!
 }
 
 input AuthSignUpInput {
@@ -239,4 +302,50 @@ input UpdateUserInput {
 
   """User browser locale"""
   locale: String = null
+}
+
+input CreateListInput {
+  """List name"""
+  name: String!
+
+  """List color"""
+  color: String
+
+  """List type"""
+  type: String
+
+  """List order"""
+  order: Float
+
+  """Is list archived"""
+  archived: Boolean
+
+  """Is list hidden"""
+  hidden: Boolean
+
+  """Is list pinned"""
+  pinned: Boolean
+}
+
+input UpdateListInput {
+  """List name"""
+  name: String
+
+  """List color"""
+  color: String
+
+  """List type"""
+  type: String
+
+  """List order"""
+  order: Float
+
+  """Is list archived"""
+  archived: Boolean
+
+  """Is list hidden"""
+  hidden: Boolean
+
+  """Is list pinned"""
+  pinned: Boolean
 }

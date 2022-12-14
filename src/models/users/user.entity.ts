@@ -1,7 +1,9 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 import { EntityBase } from '@/common/abstractions';
+
+import { List } from '../lists';
 
 @Entity()
 @ObjectType()
@@ -22,11 +24,9 @@ export class User extends EntityBase {
   @Column({ type: 'boolean', default: false })
   readonly email_verified: boolean;
 
-  // @Field({ description: 'User password' })
   @Column({ type: 'varchar' })
   readonly password: string;
 
-  // @Field({ nullable: true })
   @Column({ type: 'varchar', nullable: true })
   readonly refresh_token: string;
 
@@ -61,4 +61,8 @@ export class User extends EntityBase {
   @Field({ description: 'User browser locale' })
   @Column({ type: 'varchar', default: 'en' })
   readonly locale: string;
+
+  @Field(() => [List], { description: 'User lists' })
+  @OneToMany(() => List, (list: List) => list.author)
+  readonly lists: List[];
 }
