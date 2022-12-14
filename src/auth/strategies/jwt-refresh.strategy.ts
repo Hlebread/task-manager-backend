@@ -24,7 +24,11 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-ref
     @Inject(forwardRef(() => AuthJwtService)) private readonly authJwtService: AuthJwtService,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([(request: Request) => request.get('Refresh')]),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+        (request: Request) => request.get('Refresh'),
+        (request: Request) => request?.cookies?.Refresh,
+      ]),
       secretOrKey: authConfigService.jwtRtSecret,
       passReqToCallback: true,
     });
@@ -38,6 +42,8 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-ref
    * @ignore
    */
   validate(request: Request, payload: AuthTokenPayload): Promise<User> {
-    return this.authJwtService.getUserIfRefreshTokenMatches(payload.userId, request.get('Refresh'));
+    const refreshToken = request.get('Refresh') ?? request.cookies?.Refresh;
+
+    return this.authJwtService.getUserIfRefreshTokenMatches(payload.userId, refreshToken);
   }
 }

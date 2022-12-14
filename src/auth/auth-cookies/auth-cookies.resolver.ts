@@ -36,7 +36,7 @@ export class AuthCookiesResolver {
     @Context('request') context: Request,
     @GetCurrentUser() userFromContext,
   ): Promise<User> {
-    return this.handleMethod(context, this.authCookiesService.logIn(userFromContext));
+    return this.handleMethod(context, this.authCookiesService.logIn(userFromContext, true));
   }
 
   @Mutation(() => User, {

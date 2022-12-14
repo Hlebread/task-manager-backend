@@ -77,7 +77,7 @@ export class AuthCookiesService {
   }
 
   private getRefreshTokenCookie(refreshToken: string): string {
-    return this.getAuthCookie('Authentication', refreshToken, '1d');
+    return this.getAuthCookie('Refresh', refreshToken, '1d');
   }
 
   private getAuthCookie(name: string, token: string, maxAge?: string): string {
